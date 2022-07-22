@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,6 +28,7 @@ import java.util.Optional;
 public class UserServiceImpl implements IUserService, UserDetailsService {
     private final IUser iUser;
     private final IRole iRole;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -48,6 +50,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     @Override
     public UserDTO save(UserDTO userDTO) {
         User user = MappingHelper.map(userDTO, User.class);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User result = iUser.save(user);
         return MappingHelper.map(result, UserDTO.class);
     }
