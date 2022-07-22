@@ -9,18 +9,42 @@ import io.smartiq.springfakemail.Repository.IUser;
 import io.smartiq.springfakemail.Service.IUserService;
 import io.smartiq.springfakemail.Util.MappingHelper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 @Transactional
 @RequiredArgsConstructor
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements IUserService, UserDetailsService {
     private final IUser iUser;
     private final IRole iRole;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = iUser.findByUsername(username);
+        if(user == null){
+            throw new UsernameNotFoundException("user not found in the databse");
+        }
+
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        user.getRoles().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        });
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                authorities
+        );
+    }
     @Override
     public UserDTO save(UserDTO userDTO) {
         User user = MappingHelper.map(userDTO, User.class);
