@@ -1,7 +1,10 @@
 package io.smartiq.springfakemail.Service.Impl;
 
+import io.smartiq.springfakemail.DTO.RoleDTO;
 import io.smartiq.springfakemail.DTO.UserDTO;
+import io.smartiq.springfakemail.Model.Role;
 import io.smartiq.springfakemail.Model.User;
+import io.smartiq.springfakemail.Repository.IRole;
 import io.smartiq.springfakemail.Repository.IUser;
 import io.smartiq.springfakemail.Service.IUserService;
 import io.smartiq.springfakemail.Util.MappingHelper;
@@ -17,6 +20,7 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements IUserService {
     private final IUser iUser;
+    private final IRole iRole;
     @Override
     public UserDTO save(UserDTO userDTO) {
         User user = MappingHelper.map(userDTO, User.class);
@@ -46,5 +50,19 @@ public class UserServiceImpl implements IUserService {
     public void delete(Long id) {
         User user = iUser.getById(id);
         iUser.delete(user);
+    }
+
+    @Override
+    public RoleDTO saveRole(RoleDTO roleDTO) {
+        Role role = MappingHelper.map(roleDTO, Role.class);
+        Role result = iRole.save(role);
+        return MappingHelper.map(result, RoleDTO.class);
+    }
+
+    @Override
+    public void addRoleToUser(String username, String roleName) {
+        User user = iUser.findByUsername(username);
+        Role role = iRole.findByName(roleName);
+        user.getRoles().add(role);
     }
 }

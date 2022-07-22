@@ -5,11 +5,15 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Table(name = "userAccount")
 @Data
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @SequenceGenerator(name = "user_sequence", allocationSize = 1)
@@ -27,5 +31,7 @@ public class User {
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();
 
 }
