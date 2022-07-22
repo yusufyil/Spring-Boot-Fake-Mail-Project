@@ -1,0 +1,14 @@
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/Service/Impl/MailServiceImpl.java
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/Model/User.java
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/Service/IUserService.java
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/Controller/MailController.java
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/Repository/IUser.java
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/DTO/MailDTO.java
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/Service/IMailService.java
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/Util/MappingHelper.java
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/SpringFakeMailApplication.java
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/Repository/IMail.java
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/Controller/UserController.java
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/DTO/UserDTO.java
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/Service/Impl/UserServiceImpl.java
+/Users/yusufyildirim/Desktop/SpringFakeMail/src/main/java/io/smartiq/springfakemail/Model/Mail.java
