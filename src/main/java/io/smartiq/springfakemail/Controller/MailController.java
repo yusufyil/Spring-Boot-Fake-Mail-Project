@@ -20,7 +20,7 @@ public class MailController {
         return mailService.findAll();
     }
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/getallmails/{id}")
     public MailDTO getMail(@PathVariable Long id){
         return mailService.findOne(id);
     }
