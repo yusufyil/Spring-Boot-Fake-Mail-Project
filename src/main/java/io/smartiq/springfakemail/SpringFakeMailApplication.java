@@ -36,6 +36,7 @@ public class SpringFakeMailApplication {
             userService.saveRole(new RoleDTO(null, "ROLE_MANAGER"));
 
             userService.addRoleToUser("yusufyil@smart","ROLE_ADMIN");
+            userService.addRoleToUser("yusufyil@smart","ROLE_USER");
             userService.addRoleToUser("musmus@orion","ROLE_USER");
             userService.addRoleToUser("ahmet@can", "ROLE_MANAGER");
             userService.addRoleToUser("musmus@orion","ROLE_MANAGER");
