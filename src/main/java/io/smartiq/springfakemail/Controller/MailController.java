@@ -15,12 +15,12 @@ public class MailController {
     private final IMailService mailService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping
+    @GetMapping(value = "/getallmails")
     public List<MailDTO> listMail(){
         return mailService.findAll();
     }
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/getallmails/{id}")
+    @GetMapping(value = "/{id}")
     public MailDTO getMail(@PathVariable Long id){
         return mailService.findOne(id);
     }
