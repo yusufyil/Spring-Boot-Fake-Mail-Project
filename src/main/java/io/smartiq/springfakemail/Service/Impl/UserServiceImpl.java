@@ -1,6 +1,8 @@
 package io.smartiq.springfakemail.Service.Impl;
 
 import io.smartiq.springfakemail.DTO.UserDTO;
+import io.smartiq.springfakemail.Exception.User.UserNotFoundException;
+import io.smartiq.springfakemail.Exception.User.UsernameAlreadyTakenException;
 import io.smartiq.springfakemail.Model.User;
 import io.smartiq.springfakemail.Repository.UserRepository;
 import io.smartiq.springfakemail.Service.IUserService;
@@ -50,9 +52,16 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     public UserDTO save(UserDTO userDTO) {
         User user = MappingHelper.map(userDTO, User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User result = userRepository.save(user);
-        log.info("{} {} saved to database.", user.getName(), user.getUsername());
-        return MappingHelper.map(result, UserDTO.class);
+        User isAlreadySaved = userRepository.findByUsername(user.getUsername());
+        if(isAlreadySaved == null){
+            User result = userRepository.save(user);
+            log.info("{} {} saved to database.", user.getName(), user.getUsername());
+            return MappingHelper.map(result, UserDTO.class);
+        }else {
+            String message = "Given username is already taken.";
+            log.error(message);
+            throw new UsernameAlreadyTakenException(message);
+        }
     }
 
     @Override
@@ -72,14 +81,26 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     @Override
     public UserDTO findOne(Long id) {
         Optional<User> user = userRepository.findById(id);
-        log.info("{} {} named user has been pulled from database.");
-        return MappingHelper.map(user.get(), UserDTO.class);
+        if(user.isPresent()){
+            log.info("{} {} named user has been pulled from database.", user.get().getName(), user.get().getSurname());
+            return MappingHelper.map(user.get(), UserDTO.class);
+        } else{
+            String message = "User not found by given " + id + " id number.";
+            log.error(message);
+            throw new UserNotFoundException(message);
+        }
     }
 
     @Override
     public void delete(Long id) {
-        User user = userRepository.getById(id);
-        log.warn("{} {} named user has been deleted permanently!");
-        userRepository.delete(user);
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent() && user.get().isActive()){
+            user.get().setActive(false);
+            log.info("User with id number {} has been soft deleted", id);
+        }else{
+            String message = "There is no user in the database with " + id + " id number.";
+            log.error(message);
+            throw new UserNotFoundException(message);
+        }
     }
 }

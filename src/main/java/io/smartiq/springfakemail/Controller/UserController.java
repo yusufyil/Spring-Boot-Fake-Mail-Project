@@ -42,7 +42,7 @@ public class UserController {
     }*/
     @PostMapping
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO){
-        return new ResponseEntity<>(userService.save(userDTO), CREATED);
+        return new ResponseEntity<>(userService.save(userDTO), CREATED);//username not unique ex.
     }
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers(){
@@ -50,14 +50,14 @@ public class UserController {
     }
     @GetMapping(value = "/{id}")
     public UserDTO getUserById(@PathVariable Long id){
-        return userService.findOne(id);
+        return userService.findOne(id);//entity not found ex.
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id){
         userService.delete(id);
-        return new ResponseEntity(NO_CONTENT);
+        return new ResponseEntity(NO_CONTENT);//entity not found ex.
     }
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/token/refresh")
