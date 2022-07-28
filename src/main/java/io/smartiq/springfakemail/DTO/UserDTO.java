@@ -1,22 +1,22 @@
 package io.smartiq.springfakemail.DTO;
 
 import io.smartiq.springfakemail.Model.Role;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Collection;
 
 @Data
-@ToString
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-    private Long id;
-    private String name;
-    private String surname;
-    private String username;
-    private String password;
-    private Collection<Role> roles;
+
+    Long id;
+    String name;
+    String surname;
+    String username;
+    String password;
+    boolean isActive;
+    Collection<Role> roles;
 }

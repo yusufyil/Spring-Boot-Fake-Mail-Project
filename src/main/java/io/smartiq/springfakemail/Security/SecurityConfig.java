@@ -34,8 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/swagger-ui/**").permitAll();
         http.authorizeRequests().antMatchers("/login/**").permitAll();
         http.authorizeRequests().antMatchers("/user/token/refresh/**").permitAll();
-        http.authorizeRequests().antMatchers(GET,"/user/role/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
-        http.authorizeRequests().antMatchers(POST,"/user/role/**").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(POST, "/role").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(POST, "/role/addtouser").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(DELETE,"/user/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(GET,"/user/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(GET, "/mail/getallmails/**").hasAnyAuthority("ROLE_ADMIN");

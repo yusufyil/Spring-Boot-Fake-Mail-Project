@@ -1,6 +1,7 @@
 package io.smartiq.springfakemail.Model;
 
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "userAccount")
 @Data
-@ToString
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -19,19 +20,24 @@ public class User {
     @SequenceGenerator(name = "user_sequence", allocationSize = 1)
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long id;
+    Long id;
     @Column(nullable = false)
-    private String name;
+    String name;
     @Column(nullable = false)
-    private String surname;
+    String surname;
     @Column(nullable = false)
-    private String username;
+    String username;
     @Column(nullable = false)
-    private String password;
+    String password;
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    LocalDateTime updatedAt;
+    @Column(nullable = false)
+    boolean isActive = true;
     @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>();
+    Collection<Role> roles = new ArrayList<>();
 
 }

@@ -2,7 +2,9 @@ package io.smartiq.springfakemail.Controller;
 
 import io.smartiq.springfakemail.DTO.MailDTO;
 import io.smartiq.springfakemail.Service.IMailService;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

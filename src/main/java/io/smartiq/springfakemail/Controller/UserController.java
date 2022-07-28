@@ -5,15 +5,14 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.smartiq.springfakemail.DTO.RoleDTO;
 import io.smartiq.springfakemail.DTO.UserDTO;
 import io.smartiq.springfakemail.Model.Role;
 import io.smartiq.springfakemail.Model.User;
-import io.smartiq.springfakemail.Repository.IUser;
+import io.smartiq.springfakemail.Repository.UserRepository;
 import io.smartiq.springfakemail.Service.IUserService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -34,16 +33,20 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/user")
 public class UserController {
     private final IUserService userService;
-    private final IUser iUser;
-    @ResponseStatus(HttpStatus.CREATED)
+    private final UserRepository userRepository;
+    /*
+    * @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public UserDTO saveUser(@RequestBody UserDTO userDTO){
         return userService.save(userDTO);
+    }*/
+    @PostMapping
+    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO){
+        return new ResponseEntity<>(userService.save(userDTO), CREATED);
     }
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<UserDTO> getAllUsers(){
-        return userService.findAll();
+    public ResponseEntity<List<UserDTO>> getAllUsers(){
+        return new ResponseEntity<>(userService.findAll(), OK);
     }
     @GetMapping(value = "/{id}")
     public UserDTO getUserById(@PathVariable Long id){
@@ -52,19 +55,9 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id){
+    public ResponseEntity delete(@PathVariable("id") Long id){
         userService.delete(id);
-    }
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/role")
-    public RoleDTO saveRole(@RequestBody RoleDTO roleDTO){
-        System.out.println(roleDTO);
-        return userService.saveRole(roleDTO);
-    }
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/role/addtouser")
-    public void addRoleToUser(@RequestBody RoleToUserForm form){
-        userService.addRoleToUser(form.getUsername(), form.getRoleName());
+        return new ResponseEntity(NO_CONTENT);
     }
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/token/refresh")
@@ -77,7 +70,7 @@ public class UserController {
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String username = decodedJWT.getSubject();
-                User user = iUser.findByUsername(username);
+                User user = userRepository.findByUsername(username);
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
@@ -102,9 +95,4 @@ public class UserController {
             throw new RuntimeException("Refresh token is missing");
         }
     }
-}
-@Data
-class RoleToUserForm{
-    private String username;
-    private String roleName;
 }

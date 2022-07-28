@@ -1,7 +1,8 @@
 package io.smartiq.springfakemail.Model;
 
+import lombok.AccessLevel;
 import lombok.Data;
-import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -9,18 +10,22 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@ToString
-public class Mail {
+@FieldDefaults(level = AccessLevel.PRIVATE)public class Mail {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
     @Column(nullable = false)
-    private String header;
+    String header;
     @Column(nullable = false)
-    private String content;
+    String content;
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    LocalDateTime updatedAt;
+    @Column(nullable = false)
+    boolean isActive = true;
     @ManyToOne
-    private User user;
+    User user;
 }
