@@ -29,7 +29,6 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements IUserService, UserDetailsService {
     private final IUser iUser;
-    private final IRole iRole;
     private final PasswordEncoder passwordEncoder;
 
     @Override

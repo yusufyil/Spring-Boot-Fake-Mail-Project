@@ -1,9 +1,12 @@
 package io.smartiq.springfakemail.Model;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoleToUserForm {
-    private String username;
-    private String roleName;
+    String username;
+    String roleName;
 }

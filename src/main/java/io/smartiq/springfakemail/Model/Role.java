@@ -1,17 +1,14 @@
 package io.smartiq.springfakemail.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
-@ToString
-@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 public class Role {
@@ -19,15 +16,15 @@ public class Role {
     @SequenceGenerator(name = "role_sequence", allocationSize = 1)
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long id;
+    Long id;
     @Column(nullable = false)
-    private String name;
+    String name;
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt;
     @Column(nullable = false)
-    private boolean isActive = true;
+    boolean isActive = true;
 }
