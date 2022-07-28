@@ -18,5 +18,6 @@ public class UserDTO {
     private String surname;
     private String username;
     private String password;
+    boolean isActive;
     private Collection<Role> roles;
 }

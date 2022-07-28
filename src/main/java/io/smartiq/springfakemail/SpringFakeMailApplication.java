@@ -32,15 +32,15 @@ public class SpringFakeMailApplication {
     CommandLineRunner commandLineRunner(IUserService userService){
         return args -> {
             userService.save(new UserDTO(null, "Yusuf", "Yıldırım", "yusufyil@smart"
-            ,"passpass", null));
+            ,"passpass", true, null));
             userService.save(new UserDTO(null, "Mustafa", "Yıldırım", "musmus@orion"
-                    ,"password", null));
+                    ,"password", true, null));
             userService.save(new UserDTO(null, "Ahmet", "Can", "ahmet@can"
-                    ,"sifresifsif", null));
+                    ,"sifresifsif", true,null));
 
-            userService.saveRole(new RoleDTO(null, "ROLE_ADMIN"));
-            userService.saveRole(new RoleDTO(null, "ROLE_USER"));
-            userService.saveRole(new RoleDTO(null, "ROLE_MANAGER"));
+            userService.saveRole(new RoleDTO(null, "ROLE_ADMIN", true));
+            userService.saveRole(new RoleDTO(null, "ROLE_USER", true));
+            userService.saveRole(new RoleDTO(null, "ROLE_MANAGER", true));
 
             userService.addRoleToUser("yusufyil@smart","ROLE_ADMIN");
             userService.addRoleToUser("yusufyil@smart","ROLE_USER");

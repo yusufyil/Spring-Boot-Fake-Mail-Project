@@ -21,6 +21,11 @@ public class Mail {
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime updatedAt;
+    @Column(nullable = false)
+    private boolean isActive = true;
     @ManyToOne
     private User user;
 }

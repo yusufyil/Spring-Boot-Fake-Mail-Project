@@ -12,4 +12,5 @@ import lombok.ToString;
 public class RoleDTO {
     private Long id;
     private String name;
+    private boolean isActive;
 }

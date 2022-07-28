@@ -13,5 +13,6 @@ public class MailDTO {
     private Long id;
     private String header;
     private String content;
+    private boolean isActive;
     private Long userId;
 }
