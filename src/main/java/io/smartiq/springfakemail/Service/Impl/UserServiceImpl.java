@@ -96,7 +96,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         Optional<User> user = userRepository.findById(id);
         if(user.isPresent() && user.get().isActive()){
             user.get().setActive(false);
-            log.info("user with id number {} has been soft deleted", id);
+            log.info("User with id number {} has been soft deleted", id);
         }else{
             String message = "There is no user in the database with " + id + " id number.";
             log.error(message);
