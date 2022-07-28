@@ -50,7 +50,7 @@ public class MailServiceImpl implements IMailService {
     @Override
     public MailDTO findOne(Long id) {
         Optional<Mail> mail = mailRepository.findById(id);
-        if(mail.isPresent()){
+        if(mail.isPresent() && mail.get().isActive()){
             log.info("mail with {} has been pulled from database", id);
             return MappingHelper.map(mail.get(), MailDTO.class);
         } else{
