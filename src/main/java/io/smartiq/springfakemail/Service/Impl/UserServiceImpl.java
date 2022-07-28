@@ -1,11 +1,8 @@
 package io.smartiq.springfakemail.Service.Impl;
 
-import io.smartiq.springfakemail.DTO.RoleDTO;
 import io.smartiq.springfakemail.DTO.UserDTO;
-import io.smartiq.springfakemail.Model.Role;
 import io.smartiq.springfakemail.Model.User;
-import io.smartiq.springfakemail.Repository.IRole;
-import io.smartiq.springfakemail.Repository.IUser;
+import io.smartiq.springfakemail.Repository.UserRepository;
 import io.smartiq.springfakemail.Service.IUserService;
 import io.smartiq.springfakemail.Util.MappingHelper;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +25,12 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class UserServiceImpl implements IUserService, UserDetailsService {
-    private final IUser iUser;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = iUser.findByUsername(username);
+        User user = userRepository.findByUsername(username);
         if(user == null){
             log.error("User with the {} not found in the database.", username);
             throw new UsernameNotFoundException("user not found in the database.");
@@ -53,7 +50,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     public UserDTO save(UserDTO userDTO) {
         User user = MappingHelper.map(userDTO, User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User result = iUser.save(user);
+        User result = userRepository.save(user);
         log.info("{} {} saved to database.", user.getName(), user.getUsername());
         return MappingHelper.map(result, UserDTO.class);
     }
@@ -67,22 +64,22 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
     @Override
     public List<UserDTO> findAll() {
-        List<User> userList = iUser.findAll();
+        List<User> userList = userRepository.findAll();
         log.info("all users have been pulled from database.");
         return MappingHelper.mapList(userList, UserDTO.class);
     }
 
     @Override
     public UserDTO findOne(Long id) {
-        Optional<User> user = iUser.findById(id);
+        Optional<User> user = userRepository.findById(id);
         log.info("{} {} named user has been pulled from database.");
         return MappingHelper.map(user.get(), UserDTO.class);
     }
 
     @Override
     public void delete(Long id) {
-        User user = iUser.getById(id);
+        User user = userRepository.getById(id);
         log.warn("{} {} named user has been deleted permanently!");
-        iUser.delete(user);
+        userRepository.delete(user);
     }
 }

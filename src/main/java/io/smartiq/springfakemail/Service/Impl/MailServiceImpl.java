@@ -2,7 +2,7 @@ package io.smartiq.springfakemail.Service.Impl;
 
 import io.smartiq.springfakemail.DTO.MailDTO;
 import io.smartiq.springfakemail.Model.Mail;
-import io.smartiq.springfakemail.Repository.IMail;
+import io.smartiq.springfakemail.Repository.MailRepository;
 import io.smartiq.springfakemail.Service.IMailService;
 import io.smartiq.springfakemail.Util.MappingHelper;
 import lombok.RequiredArgsConstructor;
@@ -18,34 +18,34 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class MailServiceImpl implements IMailService {
-    private final IMail iMail;
+    private final MailRepository mailRepository;
 
     @Override
     public MailDTO save(MailDTO mailDTO) {
         Mail mail = MappingHelper.map(mailDTO, Mail.class);
-        Mail result = iMail.save(mail);
+        Mail result = mailRepository.save(mail);
         log.info("Mail saved to the database with id {}", mail.getId());
         return MappingHelper.map(result, MailDTO.class);
     }
 
     @Override
     public List<MailDTO> findAll() {
-        List<Mail> mailList = iMail.findAll();
+        List<Mail> mailList = mailRepository.findAll();
         log.info("all mails have been pulled from database.");
         return MappingHelper.mapList(mailList, MailDTO.class);
     }
 
     @Override
     public MailDTO findOne(Long id) {
-        Optional<Mail> mail = iMail.findById(id);
+        Optional<Mail> mail = mailRepository.findById(id);
         log.info("mail with {} has been pulled from database", id);
         return MappingHelper.map(mail.get(), MailDTO.class);
     }
 
     @Override
     public void delete(Long id) {
-        Mail mail = iMail.getById(id);
-        iMail.delete(mail);
+        Mail mail = mailRepository.getById(id);
+        mailRepository.delete(mail);
         log.warn("mail with {} id has been deleted permanently!", id);
     }
 }

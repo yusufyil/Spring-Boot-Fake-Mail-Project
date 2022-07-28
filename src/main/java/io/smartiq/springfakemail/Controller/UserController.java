@@ -5,12 +5,10 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.smartiq.springfakemail.DTO.RoleDTO;
 import io.smartiq.springfakemail.DTO.UserDTO;
 import io.smartiq.springfakemail.Model.Role;
-import io.smartiq.springfakemail.Model.RoleToUserForm;
 import io.smartiq.springfakemail.Model.User;
-import io.smartiq.springfakemail.Repository.IUser;
+import io.smartiq.springfakemail.Repository.UserRepository;
 import io.smartiq.springfakemail.Service.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,7 +33,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/user")
 public class UserController {
     private final IUserService userService;
-    private final IUser iUser;
+    private final UserRepository userRepository;
     /*
     * @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
@@ -72,7 +70,7 @@ public class UserController {
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String username = decodedJWT.getSubject();
-                User user = iUser.findByUsername(username);
+                User user = userRepository.findByUsername(username);
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
