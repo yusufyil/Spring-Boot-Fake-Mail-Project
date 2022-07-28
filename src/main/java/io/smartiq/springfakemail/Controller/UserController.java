@@ -8,10 +8,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.smartiq.springfakemail.DTO.RoleDTO;
 import io.smartiq.springfakemail.DTO.UserDTO;
 import io.smartiq.springfakemail.Model.Role;
+import io.smartiq.springfakemail.Model.RoleToUserForm;
 import io.smartiq.springfakemail.Model.User;
 import io.smartiq.springfakemail.Repository.IUser;
 import io.smartiq.springfakemail.Service.IUserService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -55,17 +55,6 @@ public class UserController {
     public void delete(@PathVariable("id") Long id){
         userService.delete(id);
     }
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/role")
-    public RoleDTO saveRole(@RequestBody RoleDTO roleDTO){
-        System.out.println(roleDTO);
-        return userService.saveRole(roleDTO);
-    }
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/role/addtouser")
-    public void addRoleToUser(@RequestBody RoleToUserForm form){
-        userService.addRoleToUser(form.getUsername(), form.getRoleName());
-    }
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -102,9 +91,4 @@ public class UserController {
             throw new RuntimeException("Refresh token is missing");
         }
     }
-}
-@Data
-class RoleToUserForm{
-    private String username;
-    private String roleName;
 }
