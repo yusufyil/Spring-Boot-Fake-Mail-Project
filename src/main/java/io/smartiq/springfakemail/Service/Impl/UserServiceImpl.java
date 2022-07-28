@@ -86,20 +86,4 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         log.warn("{} {} named user has been deleted permanently!");
         iUser.delete(user);
     }
-
-    @Override
-    public RoleDTO saveRole(RoleDTO roleDTO) {
-        Role role = MappingHelper.map(roleDTO, Role.class);
-        Role result = iRole.save(role);
-        log.info("{} role has been added to database.", role.getName());
-        return MappingHelper.map(result, RoleDTO.class);
-    }
-
-    @Override
-    public void addRoleToUser(String username, String roleName) {
-        User user = iUser.findByUsername(username);
-        Role role = iRole.findByName(roleName);
-        log.info("{} role has been added to {} {}.", role.getName(), user.getName(), user.getSurname());
-        user.getRoles().add(role);
-    }
 }

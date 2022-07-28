@@ -24,7 +24,7 @@ public class MailServiceImpl implements IMailService {
     public MailDTO save(MailDTO mailDTO) {
         Mail mail = MappingHelper.map(mailDTO, Mail.class);
         Mail result = iMail.save(mail);
-        log.info("Mail saved to the database with {}", mail.getId());
+        log.info("Mail saved to the database with id {}", mail.getId());
         return MappingHelper.map(result, MailDTO.class);
     }
 

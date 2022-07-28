@@ -2,6 +2,7 @@ package io.smartiq.springfakemail;
 
 import io.smartiq.springfakemail.DTO.RoleDTO;
 import io.smartiq.springfakemail.DTO.UserDTO;
+import io.smartiq.springfakemail.Service.IRoleService;
 import io.smartiq.springfakemail.Service.IUserService;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -29,7 +30,7 @@ public class SpringFakeMailApplication {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    CommandLineRunner commandLineRunner(IUserService userService){
+    CommandLineRunner commandLineRunner(IUserService userService, IRoleService roleService){
         return args -> {
             userService.save(new UserDTO(null, "Yusuf", "Yıldırım", "yusufyil@smart"
             ,"passpass", true, null));
@@ -38,15 +39,15 @@ public class SpringFakeMailApplication {
             userService.save(new UserDTO(null, "Ahmet", "Can", "ahmet@can"
                     ,"sifresifsif", true,null));
 
-            userService.saveRole(new RoleDTO(null, "ROLE_ADMIN", true));
-            userService.saveRole(new RoleDTO(null, "ROLE_USER", true));
-            userService.saveRole(new RoleDTO(null, "ROLE_MANAGER", true));
+            roleService.saveRole(new RoleDTO(null, "ROLE_ADMIN", true));
+            roleService.saveRole(new RoleDTO(null, "ROLE_USER", true));
+            roleService.saveRole(new RoleDTO(null, "ROLE_MANAGER", true));
 
-            userService.addRoleToUser("yusufyil@smart","ROLE_ADMIN");
-            userService.addRoleToUser("yusufyil@smart","ROLE_USER");
-            userService.addRoleToUser("musmus@orion","ROLE_USER");
-            userService.addRoleToUser("ahmet@can", "ROLE_MANAGER");
-            userService.addRoleToUser("musmus@orion","ROLE_MANAGER");
+            roleService.addRoleToUser("yusufyil@smart","ROLE_ADMIN");
+            roleService.addRoleToUser("yusufyil@smart","ROLE_USER");
+            roleService.addRoleToUser("musmus@orion","ROLE_USER");
+            roleService.addRoleToUser("ahmet@can", "ROLE_MANAGER");
+            roleService.addRoleToUser("musmus@orion","ROLE_MANAGER");
 
         };
     }

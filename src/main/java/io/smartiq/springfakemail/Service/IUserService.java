@@ -11,6 +11,4 @@ public interface IUserService {
     List<UserDTO> findAll();
     UserDTO findOne(Long id);
     void delete(Long id);
-    RoleDTO saveRole(RoleDTO roleDTO);
-    void addRoleToUser(String username, String roleName);
 }
