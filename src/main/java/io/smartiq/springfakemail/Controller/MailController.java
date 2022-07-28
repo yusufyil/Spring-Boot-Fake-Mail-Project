@@ -24,16 +24,16 @@ public class MailController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{id}")
     public MailDTO getMail(@PathVariable Long id){
-        return mailService.findOne(id);
+        return mailService.findOne(id);//mail not found ex.
     }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public MailDTO save(@RequestBody MailDTO mailDTO){
-        return mailService.save(mailDTO);
+        return mailService.save(mailDTO);//user not found ex.
     }
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Long id){
-        mailService.delete(id);
+        mailService.delete(id);//entity not found
     }
 }

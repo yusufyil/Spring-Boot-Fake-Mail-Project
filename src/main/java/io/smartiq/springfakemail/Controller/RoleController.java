@@ -17,7 +17,7 @@ public class RoleController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     public RoleDTO saveRole(@RequestBody RoleDTO roleDTO) {
-        return iRoleService.saveRole(roleDTO);
+        return iRoleService.saveRole(roleDTO);//same role ex
     }
 
     @ResponseStatus(HttpStatus.OK)
