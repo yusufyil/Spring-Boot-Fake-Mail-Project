@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ApiExceptionHandler {
 
     @ExceptionHandler(value = UsernameNotFoundException.class)
-    public ResponseEntity<Object> handleUsernameNotFoundException(UsernameNotFoundException exception){
+    public ResponseEntity<Object> handleUsernameNotFoundException(UsernameNotFoundException exception) {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
         ApiException apiException = new ApiException(
                 exception.getMessage(),
@@ -20,8 +20,9 @@ public class ApiExceptionHandler {
         );
         return new ResponseEntity<>(apiException, httpStatus);
     }
+
     @ExceptionHandler(value = {BaseEntityNotFoundException.class})
-    public ResponseEntity<Object> handleApiRequestException(BaseEntityNotFoundException exception){
+    public ResponseEntity<Object> handleApiRequestException(BaseEntityNotFoundException exception) {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
         ApiException apiException = new ApiException(
                 exception.getMessage(),
@@ -29,8 +30,9 @@ public class ApiExceptionHandler {
         );
         return new ResponseEntity<>(apiException, httpStatus);
     }
+
     @ExceptionHandler(value = {UsernameAlreadyTakenException.class})
-    public ResponseEntity<Object> handleUsernameException(UsernameAlreadyTakenException exception){
+    public ResponseEntity<Object> handleUsernameException(UsernameAlreadyTakenException exception) {
         HttpStatus httpStatus = HttpStatus.NOT_ACCEPTABLE;
         ApiException apiException = new ApiException(
                 exception.getMessage(),
@@ -38,8 +40,9 @@ public class ApiExceptionHandler {
         );
         return new ResponseEntity<>(apiException, httpStatus);
     }
+
     @ExceptionHandler(value = {RoleNameAlreadyAddedException.class})
-    public ResponseEntity<Object> handleRoleNameException(RoleNameAlreadyAddedException exception){
+    public ResponseEntity<Object> handleRoleNameException(RoleNameAlreadyAddedException exception) {
         HttpStatus httpStatus = HttpStatus.CONFLICT;
         ApiException apiException = new ApiException(
                 exception.getMessage(),

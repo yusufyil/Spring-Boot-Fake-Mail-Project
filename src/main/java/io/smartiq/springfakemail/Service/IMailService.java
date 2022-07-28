@@ -6,7 +6,10 @@ import java.util.List;
 
 public interface IMailService {
     MailDTO save(MailDTO mailDTO);
+
     List<MailDTO> findAll();
+
     MailDTO findOne(Long id);
+
     void delete(Long id);
 }

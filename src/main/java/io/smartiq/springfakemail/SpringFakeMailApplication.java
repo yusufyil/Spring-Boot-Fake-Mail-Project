@@ -26,34 +26,36 @@ public class SpringFakeMailApplication {
     //localhost:8080/swagger-ui address is host of documentation.
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    CommandLineRunner commandLineRunner(IUserService userService, IRoleService roleService){
+    CommandLineRunner commandLineRunner(IUserService userService, IRoleService roleService) {
         return args -> {
             userService.save(new UserDTO(null, "Yusuf", "Yıldırım", "yusufyil@smart"
-            ,"passpass", true, null));
+                    , "passpass", true, null));
             userService.save(new UserDTO(null, "Mustafa", "Yıldırım", "musmus@orion"
-                    ,"password", true, null));
+                    , "password", true, null));
             userService.save(new UserDTO(null, "Ahmet", "Can", "ahmet@can"
-                    ,"sifresifsif", true,null));
+                    , "sifresifsif", true, null));
 
             roleService.saveRole(new RoleDTO(null, "ROLE_ADMIN", true));
             roleService.saveRole(new RoleDTO(null, "ROLE_USER", true));
             roleService.saveRole(new RoleDTO(null, "ROLE_MANAGER", true));
 
-            roleService.addRoleToUser("yusufyil@smart","ROLE_ADMIN");
-            roleService.addRoleToUser("yusufyil@smart","ROLE_USER");
-            roleService.addRoleToUser("musmus@orion","ROLE_USER");
+            roleService.addRoleToUser("yusufyil@smart", "ROLE_ADMIN");
+            roleService.addRoleToUser("yusufyil@smart", "ROLE_USER");
+            roleService.addRoleToUser("musmus@orion", "ROLE_USER");
             roleService.addRoleToUser("ahmet@can", "ROLE_MANAGER");
-            roleService.addRoleToUser("musmus@orion","ROLE_MANAGER");
+            roleService.addRoleToUser("musmus@orion", "ROLE_MANAGER");
 
         };
     }
+
     @Bean
     public OpenAPI customOpenApi(@Value("${application-description}") String description,
-                                 @Value("${application-version}") String version){
+                                 @Value("${application-version}") String version) {
         return new OpenAPI()
                 .info(new Info()
                         .title("SmartIQ Task Api")

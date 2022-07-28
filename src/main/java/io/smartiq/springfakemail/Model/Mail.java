@@ -10,9 +10,10 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@FieldDefaults(level = AccessLevel.PRIVATE)public class Mail {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Mail {
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @Column(nullable = false)
     String header;

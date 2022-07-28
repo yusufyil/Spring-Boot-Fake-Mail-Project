@@ -34,6 +34,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class UserController {
     private final IUserService userService;
     private final UserRepository userRepository;
+
     /*
     * @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
@@ -41,29 +42,32 @@ public class UserController {
         return userService.save(userDTO);
     }*/
     @PostMapping
-    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
         return new ResponseEntity<>(userService.save(userDTO), CREATED);//username not unique ex.
     }
+
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers(){
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
         return new ResponseEntity<>(userService.findAll(), OK);
     }
+
     @GetMapping(value = "/{id}")
-    public UserDTO getUserById(@PathVariable Long id){
+    public UserDTO getUserById(@PathVariable Long id) {
         return userService.findOne(id);//entity not found ex.
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable("id") Long id){
+    public ResponseEntity delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return new ResponseEntity(NO_CONTENT);//entity not found ex.
     }
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
                 String refresh_token = authorizationHeader.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
@@ -82,7 +86,7 @@ public class UserController {
                 tokens.put("refresh_token", refresh_token);
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-            }catch (Exception exception){
+            } catch (Exception exception) {
                 response.setHeader("Error!", "authorization filter does not allow this request");
                 response.setStatus(FORBIDDEN.value());
                 Map<String, String> error = new HashMap<>();

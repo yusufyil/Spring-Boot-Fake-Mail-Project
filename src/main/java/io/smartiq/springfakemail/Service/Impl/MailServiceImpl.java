@@ -29,11 +29,11 @@ public class MailServiceImpl implements IMailService {
     public MailDTO save(MailDTO mailDTO) {
         Mail mail = MappingHelper.map(mailDTO, Mail.class);
         Optional<User> receiver = userRepository.findById(mail.getUser().getId());
-        if(receiver.isPresent()){
+        if (receiver.isPresent()) {
             Mail result = mailRepository.save(mail);
             log.info("Mail saved to the database with id {}", mail.getId());
             return MappingHelper.map(result, MailDTO.class);
-        }else {
+        } else {
             String message = "There is no user in the database with " + mailDTO.getUserId() + " id number.";
             log.error(message);
             throw new UserNotFoundException(message);
@@ -50,10 +50,10 @@ public class MailServiceImpl implements IMailService {
     @Override
     public MailDTO findOne(Long id) {
         Optional<Mail> mail = mailRepository.findById(id);
-        if(mail.isPresent() && mail.get().isActive()){
+        if (mail.isPresent() && mail.get().isActive()) {
             log.info("mail with {} has been pulled from database", id);
             return MappingHelper.map(mail.get(), MailDTO.class);
-        } else{
+        } else {
             String message = "Mail not found by given " + id + " id number.";
             log.error(message);
             throw new MailNotFoundException(message);
@@ -63,10 +63,10 @@ public class MailServiceImpl implements IMailService {
     @Override
     public void delete(Long id) {
         Optional<Mail> mail = mailRepository.findById(id);
-        if(mail.isPresent() && mail.get().isActive()){
+        if (mail.isPresent() && mail.get().isActive()) {
             mail.get().setActive(false);
             log.info("Mail with id number {} has been soft deleted", id);
-        }else {
+        } else {
             String message = "There is no mail şn the database with " + id + " id number";
             log.error(message);
             throw new MailNotFoundException(message);

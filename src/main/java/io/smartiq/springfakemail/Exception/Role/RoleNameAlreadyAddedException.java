@@ -1,6 +1,6 @@
 package io.smartiq.springfakemail.Exception.Role;
 
-public class RoleNameAlreadyAddedException extends RuntimeException{
+public class RoleNameAlreadyAddedException extends RuntimeException {
     public RoleNameAlreadyAddedException(String message) {
         super(message);
     }

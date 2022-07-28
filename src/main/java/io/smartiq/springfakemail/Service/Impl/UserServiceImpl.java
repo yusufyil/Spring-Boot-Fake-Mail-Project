@@ -33,7 +33,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-        if(user == null){
+        if (user == null) {
             log.error("User with the {} not found in the database.", username);
             throw new UsernameNotFoundException("user not found in the database.");
         }
@@ -48,16 +48,17 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
                 authorities
         );
     }
+
     @Override
     public UserDTO save(UserDTO userDTO) {
         User user = MappingHelper.map(userDTO, User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User isAlreadySaved = userRepository.findByUsername(user.getUsername());
-        if(isAlreadySaved == null){
+        if (isAlreadySaved == null) {
             User result = userRepository.save(user);
             log.info("{} {} saved to database.", user.getName(), user.getUsername());
             return MappingHelper.map(result, UserDTO.class);
-        }else {
+        } else {
             String message = "Given username is already taken.";
             log.error(message);
             throw new UsernameAlreadyTakenException(message);
@@ -81,10 +82,10 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     @Override
     public UserDTO findOne(Long id) {
         Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()){
+        if (user.isPresent()) {
             log.info("{} {} named user has been pulled from database.", user.get().getName(), user.get().getSurname());
             return MappingHelper.map(user.get(), UserDTO.class);
-        } else{
+        } else {
             String message = "User not found by given " + id + " id number.";
             log.error(message);
             throw new UserNotFoundException(message);
@@ -94,10 +95,10 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     @Override
     public void delete(Long id) {
         Optional<User> user = userRepository.findById(id);
-        if(user.isPresent() && user.get().isActive()){
+        if (user.isPresent() && user.get().isActive()) {
             user.get().setActive(false);
             log.info("User with id number {} has been soft deleted", id);
-        }else{
+        } else {
             String message = "There is no user in the database with " + id + " id number.";
             log.error(message);
             throw new UserNotFoundException(message);

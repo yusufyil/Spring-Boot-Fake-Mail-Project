@@ -22,6 +22,7 @@ import static org.springframework.http.HttpMethod.*;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
@@ -36,23 +37,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/user/token/refresh/**").permitAll();
         http.authorizeRequests().antMatchers(POST, "/role").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(POST, "/role/addtouser").hasAnyAuthority("ROLE_ADMIN");
-        http.authorizeRequests().antMatchers(DELETE,"/user/**").hasAnyAuthority("ROLE_ADMIN");
-        http.authorizeRequests().antMatchers(GET,"/user/**").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(DELETE, "/user/**").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(GET, "/user/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(GET, "/mail/getallmails/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(GET, "/mail/**", "ROLE_ADMIN");
-        http.authorizeRequests().antMatchers(POST, "/mail/**", "ROLE_ADMIN","ROLE_USER");
-        http.authorizeRequests().antMatchers(DELETE, "/mail/**", "ROLE_ADMIN","ROLE_USER");
+        http.authorizeRequests().antMatchers(POST, "/mail/**", "ROLE_ADMIN", "ROLE_USER");
+        http.authorizeRequests().antMatchers(DELETE, "/mail/**", "ROLE_ADMIN", "ROLE_USER");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**");
     }
+
     @Bean
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception{
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 }

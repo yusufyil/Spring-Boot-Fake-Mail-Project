@@ -31,7 +31,7 @@ public class RoleServiceImpl implements IRoleService {
         Role role = MappingHelper.map(roleDTO, Role.class);
         List<Role> listOfAllRoles = roleRepository.findAll();
         for (Role temp : listOfAllRoles) {
-            if(temp.getName().equals(roleDTO.getName())){
+            if (temp.getName().equals(roleDTO.getName())) {
                 String message = roleDTO.getName() + " is already added.";
                 log.error(message);
                 throw new RoleNameAlreadyAddedException(message);
@@ -46,15 +46,15 @@ public class RoleServiceImpl implements IRoleService {
     public void addRoleToUser(String username, String roleName) {
         User user = userRepository.findByUsername(username);
         Role role = roleRepository.findByName(roleName);
-        if(user == null){
+        if (user == null) {
             throw new UserNotFoundException("There is no user in database with " + username +
                     " username");
-        } else if(role == null){
+        } else if (role == null) {
             throw new RoleNotFoundException("There is no role in database named " + roleName);
-        }else {
+        } else {
             List<Role> listOfAllRoles = (List<Role>) user.getRoles();
-            for(Role temp: listOfAllRoles){
-                if(temp.getName().equals(roleName)){
+            for (Role temp : listOfAllRoles) {
+                if (temp.getName().equals(roleName)) {
                     String message = roleName + " is already added to given users role list.";
                     log.error(message);
                     throw new RoleNameAlreadyAddedException(message);
