@@ -67,7 +67,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
     @Override
     public UserDTO update(UserDTO userDTO) {
-        if(userRepository.findByUsername(userDTO.getUsername()) == null){
+        if (userRepository.findByUsername(userDTO.getUsername()) == null) {
             String message = "There is no user in database with " + userDTO.getUsername() + " username.";
             log.error(message);
             throw new UserNotFoundException(message);
