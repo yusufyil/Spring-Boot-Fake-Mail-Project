@@ -46,6 +46,11 @@ public class UserController {
         return new ResponseEntity<>(userService.save(userDTO), CREATED);//username not unique ex.
     }
 
+    @PutMapping
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO){
+        return new ResponseEntity<>(userService.update(userDTO), CREATED);
+    }
+
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         return new ResponseEntity<>(userService.findAll(), OK);

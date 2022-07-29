@@ -67,9 +67,17 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
     @Override
     public UserDTO update(UserDTO userDTO) {
-        log.error("update part has not been finished yet!");
-        //TODO
-        return null;
+        if(userRepository.findByUsername(userDTO.getUsername()) == null){
+            String message = "There is no user in database with " + userDTO.getUsername() + " username.";
+            log.error(message);
+            throw new UserNotFoundException(message);
+        }
+        User user = MappingHelper.map(userDTO, User.class);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setId(userRepository.findByUsername(userDTO.getUsername()).getId());
+        User result = userRepository.save(user);
+        log.info("User with " + result.getUsername() + " username updated.");
+        return MappingHelper.map(result, UserDTO.class);
     }
 
     @Override
