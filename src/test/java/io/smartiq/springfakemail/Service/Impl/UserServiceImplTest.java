@@ -2,6 +2,7 @@ package io.smartiq.springfakemail.Service.Impl;
 
 import io.smartiq.springfakemail.DTO.UserDTO;
 import io.smartiq.springfakemail.Exception.User.UserNotFoundException;
+import io.smartiq.springfakemail.Exception.User.UsernameAlreadyTakenException;
 import io.smartiq.springfakemail.Model.User;
 import io.smartiq.springfakemail.Repository.UserRepository;
 import io.smartiq.springfakemail.Util.MappingHelper;
@@ -12,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
@@ -22,6 +25,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class UserServiceImplTest {
 
     @Mock
@@ -42,7 +46,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void canloadUserByUsername() {
+    void canLoadUserByUsername() {
     }
 
     @Test
@@ -68,9 +72,43 @@ class UserServiceImplTest {
     }
 
     @Test
-    void update() {
-        //
+    void canSaveAlreadySavedUser() {
+        //given
+        UserDTO testUserDTO = new UserDTO(
+                1L,
+                "TestName",
+                "TestSurname",
+                "TestUsername",
+                "TestPassword",
+                true,
+                null
+        );
+        User testUser = MappingHelper.map(testUserDTO, User.class);
+        when(userRepository.save(testUser)).thenReturn(testUser);
+        when(userRepository.findByUsername("TestUsername")).thenReturn(testUser);
+        when(passwordEncoder.encode("TestPassword")).thenReturn("TestPassword");
+        //when & then
+        Assertions.assertThrows(UsernameAlreadyTakenException.class, () -> underTest.save(testUserDTO));
+    }
 
+    @Test
+    void updateNotExistingUser() {
+        //given
+        UserDTO testUserDTO = new UserDTO(
+                1L,
+                "TestName",
+                "TestSurname",
+                "TestUsername",
+                "TestPassword",
+                true,
+                null
+        );
+        User testUser = MappingHelper.map(testUserDTO, User.class);
+        when(userRepository.save(testUser)).thenReturn(testUser);
+        when(userRepository.findByUsername("TestUsername")).thenReturn(null);
+        when(passwordEncoder.encode("TestPassword")).thenReturn("TestPassword");
+        //when & then
+        Assertions.assertThrows(UserNotFoundException.class, () -> underTest.update(testUserDTO));
     }
 
     @Test
@@ -141,8 +179,6 @@ class UserServiceImplTest {
         );
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         //when & then
-        Assertions.assertThrows(UserNotFoundException.class, () -> {
-            underTest.delete(user.getId());
-        });
+        Assertions.assertThrows(UserNotFoundException.class, () -> underTest.delete(user.getId()));
     }
 }
