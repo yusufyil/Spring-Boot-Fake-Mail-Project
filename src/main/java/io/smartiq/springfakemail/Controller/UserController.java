@@ -10,6 +10,7 @@ import io.smartiq.springfakemail.Model.Role;
 import io.smartiq.springfakemail.Model.User;
 import io.smartiq.springfakemail.Repository.UserRepository;
 import io.smartiq.springfakemail.Service.IUserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,32 +36,38 @@ public class UserController {
     private final IUserService userService;
     private final UserRepository userRepository;
 
+    @Operation(summary = "Save a user by its dto class.")
     @PostMapping
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
         return new ResponseEntity<>(userService.save(userDTO), CREATED);
     }
 
+    @Operation(summary = "Update a user by its dto class.")
     @PutMapping
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
         return new ResponseEntity<>(userService.update(userDTO), CREATED);
     }
 
+    @Operation(summary = "Get all users. Empty list will be return if there is no user.")
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         return new ResponseEntity<>(userService.findAll(), OK);
     }
 
+    @Operation(summary = "Get a user by its id.")
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         return new ResponseEntity<>(userService.findOne(id), OK);
     }
 
+    @Operation(summary = "Delete a user by its id.")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return new ResponseEntity(NO_CONTENT);
     }
 
+    @Operation(summary = "Refresh access token by passing refresh token.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
