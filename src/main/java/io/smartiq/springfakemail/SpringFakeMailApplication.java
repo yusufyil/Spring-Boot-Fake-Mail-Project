@@ -24,6 +24,7 @@ public class SpringFakeMailApplication {
         SpringApplication.run(SpringFakeMailApplication.class, args);
     }
     //localhost:8080/swagger-ui address is host of documentation.
+    //alternative url -> http://localhost:8080/swagger-ui/index.html#/
 
     @Bean
     PasswordEncoder passwordEncoder() {
