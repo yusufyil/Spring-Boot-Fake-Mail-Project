@@ -12,4 +12,5 @@ public interface IMailService {
     MailDTO findOne(Long id);
 
     void delete(Long id);
+    void clearCache();
 }

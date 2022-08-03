@@ -31,7 +31,7 @@ public class SpringFakeMailApplication {
         return new BCryptPasswordEncoder();
     }
 
-/*    @Bean
+    @Bean
     CommandLineRunner commandLineRunner(IUserService userService, IRoleService roleService) {
         return args -> {
             userService.save(new UserDTO(null, "Yusuf", "Yıldırım", "yusufyil@smart"
@@ -53,7 +53,7 @@ public class SpringFakeMailApplication {
 
         };
     }
-*/
+
     @Bean
     public OpenAPI customOpenApi(@Value("${application-description}") String description,
                                  @Value("${application-version}") String version) {
