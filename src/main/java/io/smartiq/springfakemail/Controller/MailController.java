@@ -42,6 +42,7 @@ public class MailController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
+        mailService.clearCache();
         mailService.delete(id);
         return new ResponseEntity(OK);
     }

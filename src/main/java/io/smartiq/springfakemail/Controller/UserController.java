@@ -39,12 +39,14 @@ public class UserController {
     @Operation(summary = "Save a user by its dto class.")
     @PostMapping
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
+        userService.clearCache();
         return new ResponseEntity<>(userService.save(userDTO), CREATED);
     }
 
     @Operation(summary = "Update a user by its dto class.")
     @PutMapping
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
+        userService.clearCache();
         return new ResponseEntity<>(userService.update(userDTO), CREATED);
     }
 
@@ -63,6 +65,7 @@ public class UserController {
     @Operation(summary = "Delete a user by its id.")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
+        userService.clearCache();
         userService.delete(id);
         return new ResponseEntity(NO_CONTENT);
     }
