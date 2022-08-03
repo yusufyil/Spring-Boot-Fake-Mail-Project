@@ -25,7 +25,7 @@ public class SpringFakeMailApplication {
     }
     //localhost:8080/swagger-ui address is host of documentation.
     //alternative url -> http://localhost:8080/swagger-ui/index.html#/
-
+    //docker run -p 6379:6379 --name redisserver -d redis
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
