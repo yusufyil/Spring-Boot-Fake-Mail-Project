@@ -9,6 +9,8 @@ import io.smartiq.springfakemail.Service.IUserService;
 import io.smartiq.springfakemail.Util.MappingHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -80,6 +82,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         return MappingHelper.map(result, UserDTO.class);
     }
 
+    @Cacheable(cacheNames = "all_users_cache")
     @Override
     public List<UserDTO> findAll() {
         List<User> userList = userRepository.findAll();
@@ -111,5 +114,11 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
             log.error(message);
             throw new UserNotFoundException(message);
         }
+    }
+
+    @CacheEvict(cacheNames = "all_users_cache", allEntries = true)
+    @Override
+    public void clearCache() {
+        log.info("all users cache has been cleared.");
     }
 }

@@ -14,4 +14,5 @@ public interface IUserService {
     UserDTO findOne(Long id);
 
     void delete(Long id);
+    void clearCache();
 }

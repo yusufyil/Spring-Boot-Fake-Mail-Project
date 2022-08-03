@@ -34,6 +34,7 @@ public class MailController {
     @Operation(summary = "Save a mail to database by its dto class.")
     @PostMapping
     public ResponseEntity<MailDTO> save(@RequestBody MailDTO mailDTO) {
+        mailService.clearCache();
         return new ResponseEntity<>(mailService.save(mailDTO), CREATED);
     }
 
@@ -41,6 +42,7 @@ public class MailController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
+        mailService.clearCache();
         mailService.delete(id);
         return new ResponseEntity(OK);
     }

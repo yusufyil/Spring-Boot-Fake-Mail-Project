@@ -11,6 +11,8 @@ import io.smartiq.springfakemail.Service.IMailService;
 import io.smartiq.springfakemail.Util.MappingHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -40,6 +42,7 @@ public class MailServiceImpl implements IMailService {
         }
     }
 
+    @Cacheable(cacheNames = "all_mails_cache")
     @Override
     public List<MailDTO> findAll() {
         List<Mail> mailList = mailRepository.findAll();
@@ -67,9 +70,14 @@ public class MailServiceImpl implements IMailService {
             mail.get().setActive(false);
             log.info("Mail with id number {} has been soft deleted", id);
         } else {
-            String message = "There is no mail şn the database with " + id + " id number";
+            String message = "There is no mail in the database with " + id + " id number";
             log.error(message);
             throw new MailNotFoundException(message);
         }
+    }
+
+    @CacheEvict(cacheNames = "all_mails_cache", allEntries = true)
+    public void clearCache() {
+        log.info("all mails cache has been cleared.");
     }
 }
