@@ -2,6 +2,7 @@ package io.smartiq.springfakemail.Service;
 
 import io.smartiq.springfakemail.DTO.MailDTO;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IMailService {
@@ -13,4 +14,5 @@ public interface IMailService {
 
     void delete(Long id);
     void clearCache();
+    void sendMailToAllUsers(String mailDTO) throws IOException;
 }

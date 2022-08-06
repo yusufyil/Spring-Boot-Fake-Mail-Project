@@ -22,7 +22,7 @@ public class MailProducerApplication {
             kafkaTemplate.send("myTopic", new MailDTO(
                     1L,
                     "Header from Producer",
-                    "Very important content, 21:38",
+                    "Very important content, 21:47",
                     true,
                     1L
             ));
