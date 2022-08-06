@@ -1,7 +1,7 @@
 package io.smartiq.mailproducer.Config;
 
 import io.smartiq.mailproducer.Model.MailDTO;
-import io.smartiq.mailproducer.Util.MailSerializer;
+import io.smartiq.mailproducer.Util.MailDTOSerializer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +24,7 @@ public class KafkaProducerConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, MailSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, MailDTOSerializer.class);
         return props;
     }
 

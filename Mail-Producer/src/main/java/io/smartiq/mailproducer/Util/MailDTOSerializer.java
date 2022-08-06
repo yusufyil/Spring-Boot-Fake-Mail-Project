@@ -5,7 +5,7 @@ import org.apache.kafka.common.serialization.Serializer;
 
 import java.util.Map;
 
-public class MailSerializer implements Serializer {
+public class MailDTOSerializer implements Serializer {
     @Override
     public void configure(Map configs, boolean isKey) {
         Serializer.super.configure(configs, isKey);
@@ -17,7 +17,6 @@ public class MailSerializer implements Serializer {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             serializedMail = objectMapper.writeValueAsString(mailDTO).getBytes();
-            System.out.println(serializedMail.toString() + "^^^^^^^^^^^^^");
         } catch (Exception exception) {
             exception.printStackTrace();
         }

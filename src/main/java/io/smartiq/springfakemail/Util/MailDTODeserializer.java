@@ -6,7 +6,7 @@ import org.apache.kafka.common.serialization.Deserializer;
 
 import java.util.Map;
 
-public class MailDeserializer implements Deserializer {
+public class MailDTODeserializer implements Deserializer {
     @Override
     public Object deserialize(String s, byte[] bytes) {
         ObjectMapper mapper = new ObjectMapper();

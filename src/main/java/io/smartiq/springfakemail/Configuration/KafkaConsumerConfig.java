@@ -1,7 +1,7 @@
 package io.smartiq.springfakemail.Configuration;
 
-import io.smartiq.springfakemail.Model.Mail;
-import io.smartiq.springfakemail.Util.MailDeserializer;
+import io.smartiq.springfakemail.DTO.MailDTO;
+import io.smartiq.springfakemail.Util.MailDTODeserializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,19 +25,19 @@ public class KafkaConsumerConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, MailDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, MailDTODeserializer.class);
         return props;
     }
 
     @Bean
-    public ConsumerFactory<String, Mail> consumerFactory(){
+    public ConsumerFactory<String, MailDTO> consumerFactory(){
         return new DefaultKafkaConsumerFactory<>(consumerConfig());
     }
 
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Mail>> factory(
-            ConsumerFactory<String, Mail> consumerFactory
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, MailDTO>> factory(
+            ConsumerFactory<String, MailDTO> consumerFactory
     ){
-        ConcurrentKafkaListenerContainerFactory<String, Mail> factory =
+        ConcurrentKafkaListenerContainerFactory<String, MailDTO> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
         return factory;
