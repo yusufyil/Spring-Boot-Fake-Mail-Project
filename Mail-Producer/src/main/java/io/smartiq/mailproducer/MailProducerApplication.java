@@ -16,17 +16,4 @@ public class MailProducerApplication {
         SpringApplication.run(MailProducerApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner commandLineRunner(KafkaTemplate<String, MailDTO> kafkaTemplate){
-        return args -> {
-            kafkaTemplate.send("myTopic", new MailDTO(
-                    1L,
-                    "Header from Producer",
-                    "Very important content, 21:47",
-                    true,
-                    1L
-            ));
-        };
-    }
-
 }
