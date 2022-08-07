@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,11 +91,14 @@ public class MailServiceImpl implements IMailService {
     @Override
     @KafkaListener(topics = "myTopic", groupId = "testGroupId")
     public void sendMailToAllUsers(@Payload String mailDTO) throws IOException {
-
-        System.out.println("Listener just received data: " + mailDTO);
         ObjectMapper mapper = new ObjectMapper();
-        MailDTO test = mapper.readValue(mailDTO.getBytes(), MailDTO.class);
-        System.out.println("->>>>>>>>>>>>" + "\n" + test);
-        System.out.println("***" + test.getId());
+        MailDTO receivedDto = mapper.readValue(mailDTO.getBytes(), MailDTO.class);
+        List<User> userList = userRepository.findAll();
+        userList.stream()
+                .forEach(user -> {
+                    receivedDto.setId(null);
+                    receivedDto.setUserId(user.getId());
+                    this.save(receivedDto);
+                });
     }
 }
