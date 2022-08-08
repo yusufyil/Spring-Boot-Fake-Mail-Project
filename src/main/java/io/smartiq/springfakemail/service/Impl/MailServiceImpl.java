@@ -69,13 +69,19 @@ public class MailServiceImpl implements IMailService {
     }
 
     @Override
-    public List<MailDTO> findAllMailsOfOneUser(Long id){
-        List<Mail> mailList = mailRepository.findMailByUserId(id);
-        List<MailDTO> dtoList = new ArrayList<>();
-        for(Mail mail: mailList){
-            dtoList.add(MappingHelper.map(mail, MailDTO.class));
+    public List<MailDTO> findAllMailsOfOneUser(String username){
+        User user = userRepository.findByUsername(username);
+        if (user != null){
+            List<Mail> mailList = mailRepository.findMailByUser(user);
+            List<MailDTO> dtoList = new ArrayList<>();
+            for(Mail mail: mailList){
+                dtoList.add(MappingHelper.map(mail, MailDTO.class));
+            }
+            log.info("returning all mails of {}", username);
+            return dtoList;
         }
-        return dtoList;
+        log.info("there is no user in databse with {} username.", username);
+        return null;
     }
     @Override
     public void delete(Long id) {

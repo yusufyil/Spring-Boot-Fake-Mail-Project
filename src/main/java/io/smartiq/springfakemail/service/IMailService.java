@@ -12,7 +12,7 @@ public interface IMailService {
 
     MailDTO findOne(Long id);
 
-    List<MailDTO> findAllMailsOfOneUser(Long id);
+    List<MailDTO> findAllMailsOfOneUser(String username);
 
     void delete(Long id);
 

@@ -25,10 +25,10 @@ public class MailController {
         return new ResponseEntity<>(mailService.findAll(), OK);
     }
 
-    @Operation(summary = "Get all mails.")
-    @GetMapping(value = "/mails/{id}")
-    public ResponseEntity<List<MailDTO>> listMailForOneUser(@PathVariable Long id) {
-        return new ResponseEntity<>(mailService.findAllMailsOfOneUser(id), OK);
+    @Operation(summary = "Get all mails of one user.")
+    @GetMapping(value = "/mails/{username}")
+    public ResponseEntity<List<MailDTO>> listMailForOneUser(@PathVariable String username) {
+        return new ResponseEntity<>(mailService.findAllMailsOfOneUser(username), OK);
     }
 
     @Operation(summary = "Get a mail by its id.")
