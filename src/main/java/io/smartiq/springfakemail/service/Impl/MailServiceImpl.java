@@ -80,6 +80,7 @@ public class MailServiceImpl implements IMailService {
         }
     }
 
+    @Override
     @CacheEvict(cacheNames = "all_mails_cache", allEntries = true)
     public void clearCache() {
         log.info("all mails cache has been cleared.");
