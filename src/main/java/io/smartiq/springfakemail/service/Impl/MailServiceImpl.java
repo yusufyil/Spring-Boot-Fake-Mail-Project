@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +68,15 @@ public class MailServiceImpl implements IMailService {
         }
     }
 
+    @Override
+    public List<MailDTO> findAllMailsOfOneUser(Long id){
+        List<Mail> mailList = mailRepository.findMailByUserId(id);
+        List<MailDTO> dtoList = new ArrayList<>();
+        for(Mail mail: mailList){
+            dtoList.add(MappingHelper.map(mail, MailDTO.class));
+        }
+        return dtoList;
+    }
     @Override
     public void delete(Long id) {
         Optional<Mail> mail = mailRepository.findById(id);
