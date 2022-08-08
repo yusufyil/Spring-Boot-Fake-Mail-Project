@@ -28,7 +28,7 @@ public class RoleController {
     }
 
     @Operation(summary = "Assign a new role to a user using an already saved role.")
-    @PostMapping("/addtouser")
+    @PostMapping("/add-to-user")
     public ResponseEntity addRoleToUser(@RequestBody RoleToUserForm form) {
         return new ResponseEntity(OK);
     }

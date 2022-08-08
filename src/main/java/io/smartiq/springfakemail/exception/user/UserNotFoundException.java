@@ -1,4 +1,4 @@
-package io.smartiq.springfakemail.exception.User;
+package io.smartiq.springfakemail.exception.user;
 
 import io.smartiq.springfakemail.exception.BaseEntityNotFoundException;
 

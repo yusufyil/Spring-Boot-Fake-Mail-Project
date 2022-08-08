@@ -1,7 +1,7 @@
 package io.smartiq.springfakemail.exception;
 
-import io.smartiq.springfakemail.exception.Role.RoleNameAlreadyAddedException;
-import io.smartiq.springfakemail.exception.User.UsernameAlreadyTakenException;
+import io.smartiq.springfakemail.exception.role.RoleNameAlreadyAddedException;
+import io.smartiq.springfakemail.exception.user.UsernameAlreadyTakenException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

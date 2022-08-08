@@ -20,7 +20,7 @@ public class MailController {
     private final IMailService mailService;
 
     @Operation(summary = "Get all mails.")
-    @GetMapping(value = "/getallmails")
+    @GetMapping(value = "/mails")
     public ResponseEntity<List<MailDTO>> listMail() {
         return new ResponseEntity<>(mailService.findAll(), OK);
     }

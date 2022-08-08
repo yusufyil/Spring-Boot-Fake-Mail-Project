@@ -1,8 +1,8 @@
 package io.smartiq.springfakemail.service.Impl;
 
 import io.smartiq.springfakemail.dto.UserDTO;
-import io.smartiq.springfakemail.exception.User.UserNotFoundException;
-import io.smartiq.springfakemail.exception.User.UsernameAlreadyTakenException;
+import io.smartiq.springfakemail.exception.user.UserNotFoundException;
+import io.smartiq.springfakemail.exception.user.UsernameAlreadyTakenException;
 import io.smartiq.springfakemail.model.User;
 import io.smartiq.springfakemail.repository.UserRepository;
 import io.smartiq.springfakemail.service.IUserService;

@@ -1,9 +1,9 @@
 package io.smartiq.springfakemail.service.Impl;
 
 import io.smartiq.springfakemail.dto.RoleDTO;
-import io.smartiq.springfakemail.exception.Role.RoleNameAlreadyAddedException;
-import io.smartiq.springfakemail.exception.Role.RoleNotFoundException;
-import io.smartiq.springfakemail.exception.User.UserNotFoundException;
+import io.smartiq.springfakemail.exception.role.RoleNameAlreadyAddedException;
+import io.smartiq.springfakemail.exception.role.RoleNotFoundException;
+import io.smartiq.springfakemail.exception.user.UserNotFoundException;
 import io.smartiq.springfakemail.model.Role;
 import io.smartiq.springfakemail.model.User;
 import io.smartiq.springfakemail.repository.RoleRepository;

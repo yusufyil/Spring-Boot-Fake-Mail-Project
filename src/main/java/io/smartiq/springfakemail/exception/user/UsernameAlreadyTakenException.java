@@ -1,4 +1,4 @@
-package io.smartiq.springfakemail.exception.User;
+package io.smartiq.springfakemail.exception.user;
 
 public class UsernameAlreadyTakenException extends RuntimeException {
     public UsernameAlreadyTakenException(String message) {

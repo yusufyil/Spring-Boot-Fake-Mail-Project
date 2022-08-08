@@ -2,8 +2,8 @@ package io.smartiq.springfakemail.service.Impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.smartiq.springfakemail.dto.MailDTO;
-import io.smartiq.springfakemail.exception.Mail.MailNotFoundException;
-import io.smartiq.springfakemail.exception.User.UserNotFoundException;
+import io.smartiq.springfakemail.exception.mail.MailNotFoundException;
+import io.smartiq.springfakemail.exception.user.UserNotFoundException;
 import io.smartiq.springfakemail.model.Mail;
 import io.smartiq.springfakemail.model.User;
 import io.smartiq.springfakemail.repository.MailRepository;
