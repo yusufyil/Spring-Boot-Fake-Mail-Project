@@ -1,9 +1,9 @@
 package io.smartiq.springfakemail;
 
-import io.smartiq.springfakemail.DTO.RoleDTO;
-import io.smartiq.springfakemail.DTO.UserDTO;
-import io.smartiq.springfakemail.Service.IRoleService;
-import io.smartiq.springfakemail.Service.IUserService;
+import io.smartiq.springfakemail.dto.RoleDTO;
+import io.smartiq.springfakemail.dto.UserDTO;
+import io.smartiq.springfakemail.service.IRoleService;
+import io.smartiq.springfakemail.service.IUserService;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
@@ -23,6 +23,7 @@ public class SpringFakeMailApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringFakeMailApplication.class, args);
     }
+
     //localhost:8080/swagger-ui address is host of documentation.
     //alternative url -> http://localhost:8080/swagger-ui/index.html#/
     //docker run -p 6379:6379 --name redisserver -d redis
