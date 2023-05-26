@@ -7,7 +7,7 @@ I Used spring data jpa, spring security and spring jwt, oauth2, redis cache, apa
 postgresql, mockito and junit.
 
 
-## Deployment
+## How to run
 
 To deploy this project  you have to be installed docker and apache kafka installed on your pc.
 rest of the dependecies will handled by maven automatically.
@@ -15,6 +15,7 @@ rest of the dependecies will handled by maven automatically.
 ```bash
   docker run -p 6379:6379 --name redisserver -d redis
 ```
+you need to download zookeper for kafka.
 ```bash
   bin/zookeeper-server-start.sh config/zookeeper.properties
 ```
